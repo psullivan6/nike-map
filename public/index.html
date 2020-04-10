@@ -23,9 +23,39 @@
     <div id="map"></div>
     <script src="./data.js"></script>
     <script>
-      // This example creates a 2-pixel-wide red polyline showing the path of
-      // the first trans-Pacific flight between Oakland, CA, and Brisbane,
-      // Australia which was made by Charles Kingsford Smith.
+      function hslToHex(h, s, l) {
+        h /= 360;
+        s /= 100;
+        l /= 100;
+        let r, g, b;
+        if (s === 0) {
+          r = g = b = l; // achromatic
+        } else {
+          const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+          };
+          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          const p = 2 * l - q;
+          r = hue2rgb(p, q, h + 1 / 3);
+          g = hue2rgb(p, q, h);
+          b = hue2rgb(p, q, h - 1 / 3);
+        }
+        const toHex = (x) => {
+          const hex = Math.round(x * 255).toString(16);
+          return hex.length === 1 ? '0' + hex : hex;
+        };
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+      }
+
+      var grays = new Array(14)
+        .fill('')
+        .map((item, index) => hslToHex(0, 0, index * 2.5));
+
       function initMap() {
         var paths = [];
         var styledMapType = new google.maps.StyledMapType(
@@ -34,7 +64,7 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#212121',
+                  color: grays[3],
                 },
               ],
             },
@@ -58,7 +88,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#757575',
+                  color: grays[11],
                 },
               ],
             },
@@ -66,7 +96,7 @@
               elementType: 'labels.text.stroke',
               stylers: [
                 {
-                  color: '#212121',
+                  color: grays[3],
                 },
               ],
             },
@@ -75,7 +105,7 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#757575',
+                  color: grays[11],
                 },
                 {
                   visibility: 'off',
@@ -87,7 +117,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#9e9e9e',
+                  color: grays[13],
                 },
               ],
             },
@@ -104,7 +134,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#bdbdbd',
+                  color: grays[14],
                 },
               ],
             },
@@ -129,7 +159,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#757575',
+                  color: grays[11],
                 },
               ],
             },
@@ -138,7 +168,7 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#181818',
+                  color: grays[1],
                 },
               ],
             },
@@ -147,7 +177,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#616161',
+                  color: grays[10],
                 },
               ],
             },
@@ -156,7 +186,7 @@
               elementType: 'labels.text.stroke',
               stylers: [
                 {
-                  color: '#1b1b1b',
+                  color: grays[2],
                 },
               ],
             },
@@ -165,7 +195,7 @@
               elementType: 'geometry.fill',
               stylers: [
                 {
-                  color: '#2c2c2c',
+                  color: grays[5],
                 },
               ],
             },
@@ -183,7 +213,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#8a8a8a',
+                  color: grays[12],
                 },
               ],
             },
@@ -192,7 +222,7 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#373737',
+                  color: grays[6],
                 },
               ],
             },
@@ -201,7 +231,7 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#3c3c3c',
+                  color: grays[7],
                 },
               ],
             },
@@ -210,7 +240,8 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#4e4e4e',
+                  color: grays[5],
+                  strokeWeight: 1,
                 },
               ],
             },
@@ -219,7 +250,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#616161',
+                  color: grays[10],
                 },
               ],
             },
@@ -236,7 +267,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#757575',
+                  color: grays[11],
                 },
               ],
             },
@@ -245,7 +276,7 @@
               elementType: 'geometry',
               stylers: [
                 {
-                  color: '#000000',
+                  color: grays[0],
                 },
               ],
             },
@@ -254,7 +285,7 @@
               elementType: 'labels.text.fill',
               stylers: [
                 {
-                  color: '#3d3d3d',
+                  color: grays[8],
                 },
               ],
             },
@@ -274,14 +305,13 @@
           // [TODO] Ensure this color contrasts well with the map background color
           var randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
-          console.log('randomColor', randomColor);
-
           const polyLine = new google.maps.Polyline({
             path: coordObj.coordinates,
             geodesic: true,
-            // strokeColor: '#0033ff',
-            strokeColor: `#${randomColor}`,
-            strokeOpacity: 1.0,
+            strokeColor: '#00ffff',
+            // strokeColor: `#${randomColor}`,
+            // strokeOpacity: 1.0,
+            strokeOpacity: 0.3,
             strokeWeight: 1,
           });
           coordObj.coordinates.forEach((coord) => bounds.extend(coord));

@@ -1,12 +1,20 @@
-function compare(key) {
+function getNestedValue(initialObj, pathArr) {
+  return pathArr.reduce(
+    (obj, key) => (obj && obj[key] !== 'undefined' ? obj[key] : undefined),
+    initialObj
+  );
+}
+
+function compare(keysProp) {
+  const keys = keysProp.split('.');
   return function compareInner(a, b) {
-    const bandA = a[key];
-    const bandB = b[key];
+    const aValue = getNestedValue(a, keys);
+    const bValue = getNestedValue(b, keys);
 
     let comparison = 0;
-    if (bandA > bandB) {
+    if (aValue > bValue) {
       comparison = 1;
-    } else if (bandA < bandB) {
+    } else if (aValue < bValue) {
       comparison = -1;
     }
     return comparison;

@@ -27,6 +27,7 @@
       // the first trans-Pacific flight between Oakland, CA, and Brisbane,
       // Australia which was made by Charles Kingsford Smith.
       function initMap() {
+        var paths = [];
         var styledMapType = new google.maps.StyledMapType(
           [
             {
@@ -269,22 +270,25 @@
           mapTypeId: 'terrain',
         });
 
-        window.mapData.forEach((coord) => {
-          bounds.extend(coord);
+        window.mapData.forEach((coordObj) => {
+          var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
+          console.log('randomColor', randomColor);
+
+          const polyLine = new google.maps.Polyline({
+            path: coordObj.coordinates,
+            geodesic: true,
+            // strokeColor: '#0033ff',
+            strokeColor: `#${randomColor}`,
+            strokeOpacity: 1.0,
+            strokeWeight: 1,
+          });
+          coordObj.coordinates.forEach((coord) => bounds.extend(coord));
+          polyLine.setMap(map);
         });
 
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
-
-        var flightPath = new google.maps.Polyline({
-          path: window.mapData,
-          geodesic: true,
-          strokeColor: '#0033ff',
-          strokeOpacity: 1.0,
-          strokeWeight: 2,
-        });
-
-        flightPath.setMap(map);
         map.fitBounds(bounds);
       }
     </script>

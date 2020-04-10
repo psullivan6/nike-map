@@ -1,24 +1,72 @@
 const fs = require('fs');
 const path = require('path');
-const data = require('../data/activity-6bf282d8-a435-4bbe-879c-052d9acd5a53.json');
-// const data = require('../data/activity-9924000000019658142330003366433067222829.json');
-
+const dataDirectory = path.join(__dirname, '../data');
+const files = fs.readdirSync(dataDirectory);
 const { sortBy } = require('./utilities');
 
-const latitudes = sortBy(
-  data.metrics.find((metric) => metric.type === 'latitude').values,
-  'end_epoch_ms'
+const errors = [];
+
+const filesData = files
+  .map((file) => ({
+    filePath: file,
+    data: JSON.parse(fs.readFileSync(path.join(dataDirectory, file))),
+  }))
+  .filter(({ filePath, data: fileData }) => {
+    try {
+      if (fileData.tags == null) {
+        throw new Error('Improperly formatted JSON');
+      }
+
+      if (
+        fileData.tags.location === 'indoors' ||
+        (fileData.tags.terrain || '').toLowerCase() === 'treadmill'
+      ) {
+        throw new Error('Indoor run\t\t');
+      }
+
+      if (fileData.metrics == null) {
+        throw new Error('No metrics to read from');
+      }
+
+      if (!fileData.metric_types.includes('longitude', 'latitude')) {
+        throw new Error('Does not include coordinates');
+      }
+
+      return true;
+    } catch (error) {
+      errors.push({ error, fileData, filePath });
+      return false;
+    }
+  })
+  .map(({ data }) => {
+    const latitudes = data.metrics.find((metric) => metric.type === 'latitude')
+      .values;
+    const longitudes = data.metrics.find(
+      (metric) => metric.type === 'longitude'
+    ).values;
+
+    return {
+      id: data.id,
+      coordinates: latitudes.map((lat, index) => ({
+        lat: lat.value,
+        lng: longitudes[index].value,
+      })),
+    };
+  });
+
+fs.writeFileSync(
+  path.join(__dirname, '../public/data.js'),
+  `window.mapData = ${JSON.stringify(filesData)};\n`
 );
-const longitudes = sortBy(
-  data.metrics.find((metric) => metric.type === 'longitude').values,
-  'end_epoch_ms'
+
+sortBy(errors, 'fileData.start_epoch_ms').forEach(
+  ({ error, fileData, filePath }) => {
+    console.warn(
+      error.toString(),
+      '\t',
+      new Date(fileData.start_epoch_ms).toLocaleDateString(),
+      '\t',
+      filePath
+    );
+  }
 );
-
-const coordinates = latitudes.map((lat, index) => ({
-  lat: lat.value,
-  lng: longitudes[index].value,
-}));
-
-const fileData = `window.mapData = ${JSON.stringify(coordinates, null, 2)};\n`;
-
-fs.writeFileSync(path.join(__dirname, '../public/data.js'), fileData);

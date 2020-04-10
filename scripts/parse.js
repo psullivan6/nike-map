@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const dataDirectory = path.join(__dirname, '../data');
+const dataDirectory = path.join(__dirname, '../data/activities');
 const files = fs.readdirSync(dataDirectory);
 const { sortBy } = require('./utilities');
 

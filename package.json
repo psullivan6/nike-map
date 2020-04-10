@@ -1,0 +1,14 @@
+{
+  "name": "nike-map",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Patrick Sullivan <psullivan6@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "serve public",
+    "parse": "node ./scripts/parse"
+  },
+  "devDependencies": {
+    "serve": "^11.3.0"
+  }
+}

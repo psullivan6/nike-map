@@ -1,3 +1,5 @@
 node_modules
 public/data.js
-data/
+data/activities
+data/activities-collections
+.env

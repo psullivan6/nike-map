@@ -21,6 +21,20 @@ function compare(keysProp) {
   };
 }
 
-exports.sortBy = function sortBy(array, key) {
+export function sortBy(array, key) {
   return array.sort(compare(key));
-};
+}
+
+export function remap({ data, lookupKey, valuesKey }) {
+  return data.reduce((obj, item) => {
+    if (obj[item[lookupKey]] == null) {
+      return {
+        ...obj,
+        [item[lookupKey]]: [{ [valuesKey]: item[valuesKey] }],
+      };
+    }
+
+    obj[item[lookupKey]].push({ [valuesKey]: item[valuesKey] });
+    return obj;
+  }, {});
+}

@@ -4,4 +4,8 @@
 - https://developers.google.com/maps/documentation/javascript/shapes
 - https://stackoverflow.com/questions/10011011/using-node-js-how-do-i-read-a-json-file-into-server-memory
 - https://www.yaoyuyang.com/2017/01/20/nodejs-batch-file-processing.html
--
+
+- https://stackoverflow.com/questions/14177087/replace-a-string-in-a-file-with-nodejs
+- https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding
+- https://www.valentinog.com/blog/http-js/
+- https://stackoverflow.com/questions/8817423/node-dirname-not-defined

@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-# fetch_nike_puls_all_activities.bash
-# A simple bash script to fetch all activities and metrics from NikePlus.
-# See `nike_plus_api.md` for the API details.
+# ------------------------------------------------------------------------------
+# Graciously copied and slightly modified from:
+# https://gist.github.com/niw/858c1ecaef89858893681e46db63db66
+# ------------------------------------------------------------------------------
+
 
 mkdir -p ./data/activities
 mkdir -p ./data/activities-collections

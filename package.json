@@ -4,11 +4,14 @@
   "main": "index.js",
   "author": "Patrick Sullivan <psullivan6@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "serve": "serve public",
     "parse": "node ./scripts/parse"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
     "serve": "^11.3.0"
   }
 }

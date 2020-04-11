@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset="utf-8" />
-    <title>Simple Polylines</title>
+    <title>ps6 Playground | Nike Map</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -21,6 +21,14 @@
   </head>
   <body>
     <div id="map"></div>
+    <div class="Controls">
+      <ul>
+        <li>
+          <a href="/?year="></a>
+        </li>
+      </ul>
+    </div>
+
     <script src="./data.js"></script>
     <script>
       function hslToHex(h, s, l) {
@@ -51,6 +59,9 @@
         };
         return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
       }
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var yearParam = urlParams.get('year');
 
       var grays = new Array(14)
         .fill('')
@@ -301,22 +312,32 @@
           mapTypeId: 'terrain',
         });
 
-        window.mapData.forEach((coordObj) => {
-          // [TODO] Ensure this color contrasts well with the map background color
-          var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        window.mapData.all
+          .filter((item) => {
+            // If the URL param has been passed, then filter on it...
+            if (yearParam != null) {
+              return parseInt(item.year, 10) === parseInt(yearParam, 10);
+            }
 
-          const polyLine = new google.maps.Polyline({
-            path: coordObj.coordinates,
-            geodesic: true,
-            strokeColor: '#00ffff',
-            // strokeColor: `#${randomColor}`,
-            // strokeOpacity: 1.0,
-            strokeOpacity: 0.3,
-            strokeWeight: 1,
+            // Otherwise return everything
+            return true;
+          })
+          .forEach((item) => {
+            // [TODO] Ensure this color contrasts well with the map background color
+            var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
+            const polyLine = new google.maps.Polyline({
+              path: item.coordinates,
+              geodesic: true,
+              // strokeColor: '#00ffff',
+              strokeColor: '#9dff00',
+              // strokeOpacity: 1.0,
+              strokeOpacity: 0.3,
+              strokeWeight: 1,
+            });
+            item.coordinates.forEach((coord) => bounds.extend(coord));
+            polyLine.setMap(map);
           });
-          coordObj.coordinates.forEach((coord) => bounds.extend(coord));
-          polyLine.setMap(map);
-        });
 
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');

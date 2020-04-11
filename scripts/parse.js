@@ -3,7 +3,7 @@ import path from 'path';
 import { remap } from './utilities/misc.js';
 import { parse } from './utilities/activities.js';
 
-async function init() {
+export async function getMapData() {
   const parsedActivities = await parse();
   const byYear = remap({
     data: parsedActivities,
@@ -16,11 +16,15 @@ async function init() {
     valuesKey: 'coordinates',
   });
 
-  const mapData = {
+  return {
     all: parsedActivities,
     byYear,
     byState,
   };
+}
+
+async function init() {
+  const mapData = await getMapData();
 
   fs.writeFileSync(
     path.join(path.resolve(), 'public/data.js'),

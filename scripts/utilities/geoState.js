@@ -38,10 +38,16 @@ export async function getGeocodedState({ coordinates: { lat, lng }, id }) {
     results: [{ formatted_address }],
   } = await response.json();
 
+  const slugifiedAddress = formatted_address
+    .split(',')[0]
+    .toLowerCase()
+    .split(' ')
+    .join('-');
+
   // If we had to GET the data, then set it in the file, so we don't make the request again
   setStateMappings({
-    [id]: formatted_address,
+    [id]: slugifiedAddress,
   });
 
-  return formatted_address;
+  return slugifiedAddress;
 }

@@ -11,10 +11,14 @@ const compiledFunction = pug.compileFile(
 async function build() {
   const mapData = await getMapData();
   const years = Object.keys(mapData.byYear);
+  const states = Object.keys(mapData.byState).map((state) =>
+    state.split(',')[0].toLowerCase().split(' ').join('-')
+  );
+  const slugs = [...years, ...states];
 
-  years.forEach((year) => {
-    const html = compiledFunction({ years, year });
-    fs.writeFileSync(path.join(path.resolve(), 'public', `${year}.html`), html);
+  slugs.forEach((slug) => {
+    const html = compiledFunction({ slugs, slug });
+    fs.writeFileSync(path.join(path.resolve(), 'public', `${slug}.html`), html);
   });
 }
 

@@ -12,3 +12,4 @@
   - simple node server that pre-parses the data and generates HTML files ... basically my own SSR? do this on build time instead?
 - update README with more details and link to this TODO
 - sort out how to do Node.js imports without file path extensions
+- add a `yarn clean` command

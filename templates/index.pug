@@ -3,17 +3,20 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title ps6 Playground | Nike Map - #{year}
+    title ps6 Playground | Nike Map - #{slug}
     link(rel="stylesheet", href="./main.css")
   body
     .Sidebar
       ul.SidebarList
-        each y in years
-          li.SidebarItem(class=(y === year ? 'active' : ''))
-            a.Button(href="/" + y)= y
+        each s in slugs
+          li.SidebarItem(class=(s === slug ? 'active' : ''))
+            a.Button(href="/" + s)= s
     #map
     script(src="./data.js")
     script.
-      window.data = window.mapData.byYear[#{year}];
+      //- [TODO] This feels weird and I'd like to target the lookup against the correct object ...
+      //- perhaps combine years and states into 1 mappings object? Also, the states are the slug,
+      //- not the formatted versions
+      window.data = window.mapData.byYear['#{slug}'] || window.mapData.byState['#{slug}'];
     script(src="./main.js")
     script(async, defer, src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7g9tQ4aXGllZhSrNVeF4a3shwNKMeIRA&callback=initMap")

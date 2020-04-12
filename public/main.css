@@ -17,6 +17,11 @@ body {
   height: 100%;
 }
 
+body,
+#map > div {
+  background-color: black !important;
+}
+
 .Sidebar {
   z-index: 1;
   position: fixed;

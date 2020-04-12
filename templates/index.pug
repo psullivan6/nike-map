@@ -6,8 +6,14 @@ html(lang="en")
     title ps6 Playground | Nike Map - #{year}
     link(rel="stylesheet", href="./main.css")
   body
-    h1 #{year}
+    .Sidebar
+      ul.SidebarList
+        each y in years
+          li.SidebarItem(class=(y === year ? 'active' : ''))
+            a.Button(href="/" + y)= y
     #map
     script(src="./data.js")
+    script.
+      window.data = window.mapData.byYear[#{year}];
     script(src="./main.js")
     script(async, defer, src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7g9tQ4aXGllZhSrNVeF4a3shwNKMeIRA&callback=initMap")

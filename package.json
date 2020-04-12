@@ -8,7 +8,8 @@
   "scripts": {
     "serve": "serve public",
     "parse": "node ./scripts/parse",
-    "build": "node ./scripts/build"
+    "build": "node ./scripts/build",
+    "start": "yarn build && yarn serve"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

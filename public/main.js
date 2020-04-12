@@ -279,7 +279,7 @@ function initMap() {
     mapTypeId: 'terrain',
   });
 
-  window.mapData.all
+  window.data
     .filter((item) => {
       // If the URL param has been passed, then filter on it...
       if (yearParam != null) {
@@ -290,16 +290,11 @@ function initMap() {
       return true;
     })
     .forEach((item) => {
-      // [TODO] Ensure this color contrasts well with the map background color
-      var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-
       const polyLine = new google.maps.Polyline({
         path: item.coordinates,
         geodesic: true,
-        // strokeColor: '#00ffff',
-        strokeColor: '#9dff00',
-        // strokeOpacity: 1.0,
-        strokeOpacity: 0.3,
+        strokeColor: '#00ffff',
+        strokeOpacity: 0.4,
         strokeWeight: 1,
       });
       item.coordinates.forEach((coord) => bounds.extend(coord));

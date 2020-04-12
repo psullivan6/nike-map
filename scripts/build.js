@@ -13,7 +13,7 @@ async function build() {
   const years = Object.keys(mapData.byYear);
 
   years.forEach((year) => {
-    const html = compiledFunction({ year });
+    const html = compiledFunction({ years, year });
     fs.writeFileSync(path.join(path.resolve(), 'public', `${year}.html`), html);
   });
 }

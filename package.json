@@ -5,6 +5,9 @@
   "author": "Patrick Sullivan <psullivan6@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=13"
+  },
   "scripts": {
     "serve": "serve public",
     "parse": "node ./scripts/parse",

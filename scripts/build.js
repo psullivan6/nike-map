@@ -16,6 +16,11 @@ async function build() {
   );
   const slugs = [...years, ...states];
 
+  fs.writeFileSync(
+    path.join(path.resolve(), 'public/index.html'),
+    compiledFunction({ slugs })
+  );
+
   slugs.forEach((slug) => {
     const html = compiledFunction({ slugs, slug });
     fs.writeFileSync(path.join(path.resolve(), 'public', `${slug}.html`), html);

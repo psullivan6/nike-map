@@ -25,9 +25,8 @@ body,
 .Sidebar {
   z-index: 1;
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
-  height: 100%;
   background: hsla(0, 0%, 0%, 0.8);
 }
 
@@ -47,8 +46,9 @@ body,
   border-radius: 120px;
   border: 2px solid #0ff;
   color: #0ff;
-  font-size: 14px;
+  font-size: 12px;
   text-decoration: none;
+  text-align: center;
 }
 
 .Button:hover,

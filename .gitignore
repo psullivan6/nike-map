@@ -4,3 +4,4 @@ public/*.html
 data/activities
 data/activities-collections
 .env
+.now

@@ -12,7 +12,7 @@ html(lang="en")
           a.Button(href="/") All
         each s in slugs
           li.SidebarItem(class=(s === slug ? 'active' : ''))
-            a.Button(href="/" + s)= s
+            a.Button(href="/" + s + ".html")= s
     #map
     script(src="./data.js")
     script.

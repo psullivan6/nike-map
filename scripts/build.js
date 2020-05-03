@@ -9,6 +9,7 @@ const compiledFunction = pug.compileFile(
 );
 
 async function build() {
+  console.log('Running build script...');
   const mapData = await getMapData();
   const years = Object.keys(mapData.byYear);
   const states = Object.keys(mapData.byState).map((state) =>
@@ -16,12 +17,14 @@ async function build() {
   );
   const slugs = [...years, ...states];
 
+  console.log('Writing main index fil...');
   fs.writeFileSync(
     path.join(path.resolve(), 'public/index.html'),
     compiledFunction({ slugs })
   );
 
   slugs.forEach((slug) => {
+    console.log(`Writing ${slug} file...`);
     const html = compiledFunction({ slugs, slug });
     fs.writeFileSync(path.join(path.resolve(), 'public', `${slug}.html`), html);
   });

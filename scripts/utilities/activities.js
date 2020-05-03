@@ -1,12 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-import { sortBy } from './misc.js';
-import { getGeocodedState } from './geoState.js';
+const fs = require('fs');
+const path = require('path');
+const { sortBy } = require('./misc.js');
+const { getGeocodedState } = require('./geoState.js');
 
 const activitiesDirectory = path.join(path.resolve(), 'data/activities');
 const files = fs.readdirSync(activitiesDirectory);
 
-export async function parse() {
+async function parse() {
   const errors = [];
   const parsedFiles = files
     .map((file) => ({
@@ -75,3 +75,5 @@ export async function parse() {
 
   return Promise.all(parsedFiles);
 }
+
+exports.parse = parse;

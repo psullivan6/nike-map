@@ -6,13 +6,13 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=13"
+    "node": "12.x"
   },
   "scripts": {
     "serve": "serve public",
     "parse": "node ./scripts/parse",
     "build": "node ./scripts/build",
-    "start": "yarn build && yarn serve"
+    "dev": "yarn build && yarn serve"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

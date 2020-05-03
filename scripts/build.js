@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import pug from 'pug';
-import { getMapData } from './parse.js';
+const fs = require('fs');
+const path = require('path');
+const pug = require('pug');
+const { getMapData } = require('./parse');
 
 // Compile the source code
 const compiledFunction = pug.compileFile(

@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import { remap } from './utilities/misc.js';
-import { parse } from './utilities/activities.js';
+const fs = require('fs');
+const path = require('path');
+const { remap } = require('./utilities/misc.js');
+const { parse } = require('./utilities/activities.js');
 
-export async function getMapData() {
+async function getMapData() {
   const parsedActivities = await parse();
   const byYear = remap({
     data: parsedActivities,
@@ -33,3 +33,5 @@ async function init() {
 }
 
 init();
+
+exports.getMapData = getMapData;

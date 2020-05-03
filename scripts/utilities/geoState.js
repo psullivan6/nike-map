@@ -1,7 +1,7 @@
-import fs from 'fs';
-import fetch from 'node-fetch';
-import path from 'path';
-import dotenv from 'dotenv';
+const fs = require('fs');
+const fetch = require('node-fetch');
+const path = require('path');
+const dotenv = require('dotenv');
 dotenv.config();
 
 const stateMappingsPath = path.join(
@@ -9,11 +9,11 @@ const stateMappingsPath = path.join(
   '/data/state-mappings.json'
 );
 
-export function getStateMappings() {
+function getStateMappings() {
   return JSON.parse(fs.readFileSync(stateMappingsPath));
 }
 
-export function setStateMappings(newData) {
+function setStateMappings(newData) {
   const stateMappingsData = getStateMappings();
   return fs.writeFileSync(
     stateMappingsPath,
@@ -24,7 +24,7 @@ export function setStateMappings(newData) {
   );
 }
 
-export async function getGeocodedState({ coordinates: { lat, lng }, id }) {
+async function getGeocodedState({ coordinates: { lat, lng }, id }) {
   const stateMappingsData = getStateMappings();
 
   if (stateMappingsData[id] != null) {
@@ -51,3 +51,7 @@ export async function getGeocodedState({ coordinates: { lat, lng }, id }) {
 
   return slugifiedAddress;
 }
+
+exports.getStateMappings = getStateMappings;
+exports.setStateMappings = setStateMappings;
+exports.getGeocodedState = getGeocodedState;

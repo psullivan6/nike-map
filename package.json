@@ -16,7 +16,7 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "serve": "^11.3.0"
   }
 }
